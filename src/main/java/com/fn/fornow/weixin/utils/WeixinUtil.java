@@ -32,7 +32,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
-import com.fn.fornow.utils.MyX509TrustManager;
+import com.fn.fornow.common.util.MyX509TrustManager;
 import com.fn.fornow.weixin.pojo.AccessToken;
 
 /**

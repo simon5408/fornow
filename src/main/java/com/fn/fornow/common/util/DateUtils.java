@@ -1,5 +1,8 @@
 package com.fn.fornow.common.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -14,6 +17,8 @@ public class DateUtils {
 	public static final String YYMMDD = "yyMMdd";
 	public static final String YYYYMMDD = "yyyyMMdd";
 	public static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
+			"yyyy-MM-dd hh:mm:ss");
 
 	public static DateTime toDateTime(String dateTime) {
 		if (StringUtils.isBlank(dateTime)) {
@@ -39,6 +44,18 @@ public class DateUtils {
 
 	public static String todayToString() {
 		return new LocalDate().toString(YYMMDD);
+	}
+	
+	/**
+	 * 将微信消息中的CreateTime转换成标准格式的时间（yyyy-MM-dd HH:mm:ss）
+	 * 
+	 * @param createTime
+	 * @return
+	 */
+	public static String getNormalDateFromWebChat(String createTime) {
+		Long msgCreateTime = Long.parseLong(createTime) * 1000;
+
+		return DATE_FORMAT.format(new Date(msgCreateTime));
 	}
 
 }

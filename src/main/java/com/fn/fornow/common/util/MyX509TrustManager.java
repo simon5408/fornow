@@ -10,7 +10,7 @@
  *            Copyright (c) 2014 by ForNow.  All rights reserved.
  *
  *****************************************************************************/
-package com.fn.fornow.utils;
+package com.fn.fornow.common.util;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

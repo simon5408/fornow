@@ -10,6 +10,7 @@ public interface ResultPath {
 	String user = "/user";
 	String login = "/login";
 	String logout = "/logout";
+	String upload = "/upload";
 	String _403 = "/403";
 	
 	String GOTO_HOME = "home";

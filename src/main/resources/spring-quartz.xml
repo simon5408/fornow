@@ -21,7 +21,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<!-- ======================== 调度触发器 ======================== -->
 	<bean id="simonCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="simonQtzJobMethod"></property>
-		<property name="cronExpression" value="0/5 * * * * ?"></property>
+		<property name="cronExpression" value="0/55 * * * * ?"></property>
 		<property name="startDelay" value="5000"></property>
 	</bean>
 

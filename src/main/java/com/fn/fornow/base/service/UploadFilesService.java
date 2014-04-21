@@ -10,41 +10,17 @@
  *            Copyright (c) 2014 by ForNow.  All rights reserved.
  *
  *****************************************************************************/
-package com.fn.fornow.utils;
+package com.fn.fornow.base.service;
 
-import java.io.UnsupportedEncodingException;
+import com.fn.fornow.base.entity.UploadFiles;
+import com.fn.fornow.common.orm.dao.BaseDao;
 
 /**
  * @author Jiafa Lv
- * @date Apr 15, 2014
+ * @date Apr 21, 2014 11:01:36 AM
+ * @email simon-jiafa@126.com
+ * 
  */
-public class StringUtils {
+public interface UploadFilesService extends BaseDao<UploadFiles> {
 
-	/**
-	 * 
-	 * @param s
-	 * @return
-	 */
-	public static boolean isEmpty(String s) {
-		return s == null || s.trim().length() == 0;
-	}
-
-	/**
-	 * 
-	 * @param content
-	 * @return
-	 */
-	public static int getByteSize(String content) {
-		int size = 0;
-		if (!isEmpty(content)) {
-			try {
-				size = content.getBytes("utf-8").length;
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return size;
-	}
 }

@@ -1,5 +1,8 @@
 package com.fn.fornow.common.util;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +20,7 @@ import com.google.common.collect.Sets;
 public class StringUtils {
 
 	public static final String COMMA = ",";
+	public static final String POINT = ".";
 
 	public static List<String> stringTokenizer(String value) {
 		List<String> results = Lists.newArrayList();
@@ -67,11 +71,47 @@ public class StringUtils {
 		return result;
 	}
 
-	public static boolean isEmpty(String str) {
-		if(str != null && "".equals(str)){
-			return false;
+	/**
+	 * 
+	 * @param content
+	 * @return
+	 */
+	public static int getByteSize(String content) {
+		int size = 0;
+		if (!isEmpty(content)) {
+			try {
+				size = content.getBytes("utf-8").length;
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return size;
+	}
+	
+	/**
+	 * String to List with special character
+	 * 
+	 * @param arrayStr
+	 * @param special
+	 * @return
+	 */
+	public static List<String> getListWithSpecial(String arrayStr, String special) {
+		List<String> array = new ArrayList<String>();
+		if(!isEmpty(arrayStr)){
+			String[] arrays = arrayStr.split(special);
+			array = Arrays.asList(arrays);
 		}
 		
+		return array;
+	}
+
+	public static boolean isEmpty(String str) {
+		if (str != null && "".equals(str)) {
+			return false;
+		}
+
 		return true;
 	}
 }

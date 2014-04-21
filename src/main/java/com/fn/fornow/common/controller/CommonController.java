@@ -14,10 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.google.common.collect.Sets;
+import com.fn.fornow.base.service.UploadFilesService;
 import com.fn.fornow.base.service.UserService;
 import com.fn.fornow.common.ViewName;
 import com.fn.fornow.demo.service.DemoService;
+import com.google.common.collect.Sets;
 
 /**
  * @author Simon Lv
@@ -86,4 +87,7 @@ public abstract class CommonController {
 
 	@Autowired
 	protected UserService userService;
+	
+	@Autowired
+	protected UploadFilesService uploadFilesService;
 }
