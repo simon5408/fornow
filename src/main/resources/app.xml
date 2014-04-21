@@ -43,6 +43,7 @@
 				<value>com.fn.fornow.common.orm.entity</value>
 				<value>com.fn.fornow.demo.entity</value>
 				<value>com.fn.fornow.base.entity</value>
+				<value>com.fn.fornow.weixin.entity</value>
 			</list>
 		</property>
 	</bean>
