@@ -39,7 +39,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- JCaptcha's filter 
+	<!-- JCaptcha's filter  -->
     <filter>
         <filter-name>jcaptchaFilter</filter-name>
         <filter-class>com.fn.fornow.base.jcaptcha.JCaptchaFilter</filter-class>
@@ -48,14 +48,14 @@
             <param-value>/login</param-value>
         </init-param>
     </filter>
-      -->
-    <!-- jcaptcha image crerate URL 
+    
+    <!-- jcaptcha image crerate URL -->
     <filter-mapping>
         <filter-name>jcaptchaFilter</filter-name>
         <url-pattern>/jcaptcha.jpg</url-pattern>
     </filter-mapping>
-      -->
-    <!-- jcaptcha login check URL. Note: before springSecurityFilter filter-mapping  
+      
+    <!-- jcaptcha login check URL. Note: before springSecurityFilter filter-mapping -->  
     <filter-mapping>
         <filter-name>jcaptchaFilter</filter-name>  
         <url-pattern>/user/login</url-pattern>  
@@ -65,7 +65,7 @@
         <filter-name>jcaptchaFilter</filter-name>  
         <url-pattern>/register</url-pattern>  
     </filter-mapping>
--->  
+
 	<!-- Spring Security Session  -->
     <listener>
         <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
