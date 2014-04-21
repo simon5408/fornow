@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,7 +34,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
  */
 @Component
 public class UploadUtils {
-	public static final String UPLOAD_PATH = "/home/simon/javaspace/upload";
+	public static final String UPLOAD_PATH = "images/files/";
 
 	private static Logger logger = LoggerFactory.getLogger(UploadUtils.class);
 
@@ -44,14 +45,17 @@ public class UploadUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String getFileNameByUpload(HttpServletRequest request, String inputFileName)
-			throws IOException {
+	public static String getFileNameByUpload(HttpServletRequest request,
+			String inputFileName) throws IOException {
 		String fileName = null;
+		String realDirPath = request.getSession().getServletContext()
+				.getRealPath("/");
 		if (request instanceof MultipartHttpServletRequest) {
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			logger.debug("Spring3 MVC upload file with Multipart form");
 
-			MultipartFile file = multipartRequest.getFiles(inputFileName).get(0);
+			MultipartFile file = multipartRequest.getFiles(inputFileName)
+					.get(0);
 			long size = file.getSize();
 			byte[] data = new byte[(int) size];
 			InputStream input = file.getInputStream();
@@ -65,9 +69,8 @@ public class UploadUtils {
 			logger.debug("file.getContentType() ==> " + file.getContentType());
 			logger.debug("file.getName() ==> " + file.getName());
 			fileName = getWholeFileName(file.getOriginalFilename());
-			File outFile = new File(fileName);
-			logger.debug("file WholeName ==> " + UPLOAD_PATH + File.separator
-					+ fileName);
+			File outFile = new File(realDirPath + fileName);
+			logger.debug("file WholeName ==> " + realDirPath + fileName);
 			if (!outFile.exists()) {
 				makeDir(outFile.getParentFile());
 				outFile.createNewFile();
@@ -85,10 +88,22 @@ public class UploadUtils {
 		return fileName;
 	}
 
+	/**
+	 * Get the whole file name
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private static String getWholeFileName(String fileName) {
 		StringBuffer sb = new StringBuffer(UPLOAD_PATH);
-		sb.append(File.separator).append(System.currentTimeMillis())
-				.append(fileName);
+		sb.append(DateUtils.todayToString()).append(File.separator)
+				.append(UUID.randomUUID());
+		String fileExt = StringUtils.getFileExt(fileName);
+		if (StringUtils.isNoEmpty(fileExt)) {
+			sb.append(fileExt);
+		} else {
+			sb.append(fileName);
+		}
 
 		return sb.toString();
 	}

@@ -80,7 +80,7 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		// 让上一次的验证码失效
 		session.setAttribute(VALIDATE_CODE, null);
 		String validateCodeParameter = obtainValidateCodeParameter(request);
-		if (StringUtils.isEmpty(validateCodeParameter)
+		if (!StringUtils.isNoEmpty(validateCodeParameter)
 				|| !sessionValidateCode.equalsIgnoreCase(validateCodeParameter)) {
 			throw new AuthenticationServiceException("validateCode.notEquals");
 		}

@@ -20,7 +20,7 @@ import com.google.common.collect.Sets;
 public class StringUtils {
 
 	public static final String COMMA = ",";
-	public static final String POINT = ".";
+	public static final String POINT = "\\.";
 
 	public static List<String> stringTokenizer(String value) {
 		List<String> results = Lists.newArrayList();
@@ -78,7 +78,7 @@ public class StringUtils {
 	 */
 	public static int getByteSize(String content) {
 		int size = 0;
-		if (!isEmpty(content)) {
+		if (isNoEmpty(content)) {
 			try {
 				size = content.getBytes("utf-8").length;
 			} catch (UnsupportedEncodingException e) {
@@ -89,7 +89,7 @@ public class StringUtils {
 
 		return size;
 	}
-	
+
 	/**
 	 * String to List with special character
 	 * 
@@ -97,21 +97,32 @@ public class StringUtils {
 	 * @param special
 	 * @return
 	 */
-	public static List<String> getListWithSpecial(String arrayStr, String special) {
+	public static List<String> getListWithSpecial(String arrayStr,
+			String special) {
 		List<String> array = new ArrayList<String>();
-		if(!isEmpty(arrayStr)){
+		if (isNoEmpty(arrayStr)) {
 			String[] arrays = arrayStr.split(special);
 			array = Arrays.asList(arrays);
 		}
-		
+
 		return array;
 	}
 
-	public static boolean isEmpty(String str) {
-		if (str != null && "".equals(str)) {
-			return false;
+	public static boolean isNoEmpty(String str) {
+		if (str != null && !"".equals(str)) {
+			return true;
 		}
 
-		return true;
+		return false;
+	}
+
+	public static String getFileExt(String fileName) {
+		if (isNoEmpty(fileName)) {
+			List<String> array = getListWithSpecial(fileName, POINT);
+			if (array.size() > 0) {
+				return "." + array.get(array.size() - 1);
+			}
+		}
+		return null;
 	}
 }

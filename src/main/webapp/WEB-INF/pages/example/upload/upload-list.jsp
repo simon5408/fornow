@@ -43,6 +43,7 @@
 							</tr>
 							<tr>
 								<th>No.</th>
+								<th>Pic</th>
 								<th>Addr</th>
 								<th>Date</th>
 								<th></th>
@@ -50,6 +51,7 @@
 							<c:forEach var="uploadFiles" items="${page.datas}">
 								<tr>
 									<td>${uploadFiles.uploadid}</td>
+									<td><img src="${pageContext.request.contextPath}/${uploadFiles.filepath}"/></td>
 									<td>${uploadFiles.filepath}</td>
 									<td>
 										<u:dateFormat value="${uploadFiles.createDateTime}"/>

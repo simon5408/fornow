@@ -52,7 +52,7 @@ public class MyAuthenticationManager implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		logger.debug("[MyAuthenticationManager] username ==> " + username);
-		if (!StringUtils.isEmpty(username)) {
+		if (!StringUtils.isNoEmpty(username)) {
 			throw new UsernameNotFoundException("用户名不能为空！");
 		}
 		Users user = userService.getUserByName(username);

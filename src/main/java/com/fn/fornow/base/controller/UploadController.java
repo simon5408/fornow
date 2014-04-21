@@ -70,17 +70,20 @@ public class UploadController extends CommonController {
 	}
 
 	@RequestMapping("/destroy/{id}")
-	public String destroy(@PathVariable long id) {
+	public String destroy(HttpServletRequest request, @PathVariable long id) {
 		logger.debug("destroy: id[{}]", id);
-		
+
 		UploadFiles uploadFiles = uploadFilesService.get(id);
-		if(uploadFiles != null){
-			if(UploadUtils.isSucc4DelFile(uploadFiles.getFilepath())){
+		if (uploadFiles != null) {
+			String wholePath = request.getSession().getServletContext()
+					.getRealPath("/")
+					+ uploadFiles.getFilepath();
+			if (UploadUtils.isSucc4DelFile(wholePath)) {
 				logger.debug("Try to delete column by: id[{}]", id);
 				uploadFilesService.delete(id);
 			}
 		}
-		
+
 		return redirect(ResultPath.upload);
 	}
 
@@ -88,7 +91,8 @@ public class UploadController extends CommonController {
 	public String getUploadFile(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			String fileName = UploadUtils.getFileNameByUpload(request, "uploadFile");
+			String fileName = UploadUtils.getFileNameByUpload(request,
+					"uploadFile");
 
 			UploadFiles uploadFiles = new UploadFiles();
 			uploadFiles.setFilepath(fileName);
