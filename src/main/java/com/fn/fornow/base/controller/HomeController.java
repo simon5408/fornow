@@ -5,16 +5,22 @@ package com.fn.fornow.base.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fn.fornow.common.controller.CommonController;
 import com.fn.fornow.common.controller.Module;
 import com.fn.fornow.common.controller.path.ResultPath;
+import com.fn.fornow.common.util.FreemarkerUtils;
 
 /**
  * @author Simon Lv
@@ -50,6 +56,23 @@ public class HomeController extends CommonController {
 	@RequestMapping(value = ResultPath.logout, method = RequestMethod.GET)
 	public String logout(Model model) {
 		return ResultPath.GOTO_INDEX;
+	}
+
+	@RequestMapping("/hello")
+	public String sayHello(HttpServletRequest request) {
+		System.out.println("say Hello ……");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", " World!");
+		String targetPath = "hello.html";
+		FreemarkerUtils.crateHTML(request.getSession().getServletContext(), map, "/hello.ftl", targetPath);
+		return redirect("/html/"+targetPath);
+	}
+
+	@RequestMapping("/hi")
+	public String sayHi(ModelMap map) {
+		System.out.println("say hi ……");
+		map.put("name", "jojo");
+		return "/hi.ftl";
 	}
 
 	/*

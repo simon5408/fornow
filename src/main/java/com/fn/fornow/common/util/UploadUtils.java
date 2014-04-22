@@ -36,7 +36,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
  */
 @Component
 public class UploadUtils {
-	public static final String UPLOAD_PATH = "images/files/";
+	public static final String UPLOAD_PATH = "upload/";
 	public static final String FILE_NAME = "fileName";
 	public static final String FILE_EXT = "fileExt";
 
@@ -202,7 +202,7 @@ public class UploadUtils {
 	 * 
 	 * @param dir
 	 */
-	private static void makeDir(File dir) {
+	public static void makeDir(File dir) {
 		if (!dir.getParentFile().exists()) {
 			makeDir(dir.getParentFile());
 		}
