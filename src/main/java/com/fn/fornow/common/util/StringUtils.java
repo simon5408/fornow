@@ -21,6 +21,7 @@ public class StringUtils {
 
 	public static final String COMMA = ",";
 	public static final String POINT = "\\.";
+	public static final String UNDERLINE = "_";
 
 	public static List<String> stringTokenizer(String value) {
 		List<String> results = Lists.newArrayList();

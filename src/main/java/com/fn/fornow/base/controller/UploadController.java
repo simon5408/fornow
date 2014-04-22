@@ -13,6 +13,7 @@
 package com.fn.fornow.base.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,8 @@ import com.fn.fornow.common.controller.CommonController;
 import com.fn.fornow.common.controller.Module;
 import com.fn.fornow.common.controller.path.ResultPath;
 import com.fn.fornow.common.orm.PropertyFilter;
+import com.fn.fornow.common.util.ImageUtils;
+import com.fn.fornow.common.util.StringUtils;
 import com.fn.fornow.common.util.UploadUtils;
 
 /**
@@ -76,9 +79,16 @@ public class UploadController extends CommonController {
 		UploadFiles uploadFiles = uploadFilesService.get(id);
 		if (uploadFiles != null) {
 			String wholePath = request.getSession().getServletContext()
-					.getRealPath("/")
-					+ uploadFiles.getFilepath();
-			if (UploadUtils.isSucc4DelFile(wholePath)) {
+					.getRealPath("/");
+			String originPath = wholePath + uploadFiles.getFilepath()
+					+ uploadFiles.getFileExt();
+			String mediumPath = wholePath + uploadFiles.getMediumpath()
+					+ uploadFiles.getFileExt();
+			String smallPath = wholePath + uploadFiles.getSmallpath()
+					+ uploadFiles.getFileExt();
+			if (UploadUtils.isSucc4DelFile(originPath)
+					&& UploadUtils.isSucc4DelFile(mediumPath)
+					&& UploadUtils.isSucc4DelFile(smallPath)) {
 				logger.debug("Try to delete column by: id[{}]", id);
 				uploadFilesService.delete(id);
 			}
@@ -91,11 +101,17 @@ public class UploadController extends CommonController {
 	public String getUploadFile(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			String fileName = UploadUtils.getFileNameByUpload(request,
-					"uploadFile");
+			Map<String, String> fileMap = UploadUtils.getFileNameByUpload(
+					request, "uploadFile");
+			String fileName = fileMap.get(UploadUtils.FILE_NAME);
 
 			UploadFiles uploadFiles = new UploadFiles();
 			uploadFiles.setFilepath(fileName);
+			uploadFiles.setMediumpath(fileName + StringUtils.UNDERLINE
+					+ ImageUtils.EXT_MEDIUM_SIZE);
+			uploadFiles.setSmallpath(fileName + StringUtils.UNDERLINE
+					+ ImageUtils.EXT_SMALL_SIZE);
+			uploadFiles.setFileExt(fileMap.get(UploadUtils.FILE_EXT));
 			uploadFilesService.save(uploadFiles);
 
 		} catch (Exception e) {

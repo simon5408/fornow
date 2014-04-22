@@ -40,6 +40,12 @@ public class UploadFiles extends BaseEntity {
 	private Long uploadid;
 	
 	private String filepath;
+	
+	private String mediumpath;
+	
+	private String smallpath;
+	
+	private String fileExt;
 
 	/**
 	 * @return the uploadid
@@ -67,5 +73,47 @@ public class UploadFiles extends BaseEntity {
 	 */
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
+	}
+
+	/**
+	 * @return the mediumpath
+	 */
+	public String getMediumpath() {
+		return mediumpath;
+	}
+
+	/**
+	 * @param mediumpath the mediumpath to set
+	 */
+	public void setMediumpath(String mediumpath) {
+		this.mediumpath = mediumpath;
+	}
+
+	/**
+	 * @return the smallpath
+	 */
+	public String getSmallpath() {
+		return smallpath;
+	}
+
+	/**
+	 * @param smallpath the smallpath to set
+	 */
+	public void setSmallpath(String smallpath) {
+		this.smallpath = smallpath;
+	}
+
+	/**
+	 * @return the fileExt
+	 */
+	public String getFileExt() {
+		return fileExt;
+	}
+
+	/**
+	 * @param fileExt the fileExt to set
+	 */
+	public void setFileExt(String fileExt) {
+		this.fileExt = fileExt;
 	}
 }

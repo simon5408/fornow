@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +37,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Component
 public class UploadUtils {
 	public static final String UPLOAD_PATH = "images/files/";
+	public static final String FILE_NAME = "fileName";
+	public static final String FILE_EXT = "fileExt";
 
 	private static Logger logger = LoggerFactory.getLogger(UploadUtils.class);
 
@@ -45,9 +49,9 @@ public class UploadUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String getFileNameByUpload(HttpServletRequest request,
-			String inputFileName) throws IOException {
-		String fileName = null;
+	public static Map<String, String> getFileNameByUpload(
+			HttpServletRequest request, String inputFileName) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
 		String realDirPath = request.getSession().getServletContext()
 				.getRealPath("/");
 		if (request instanceof MultipartHttpServletRequest) {
@@ -64,13 +68,19 @@ public class UploadUtils {
 			// create file, if no app context path, will throws access denied.
 			// seems like you could not create any file at tomcat/bin
 			// directory!!!
-			logger.debug("file.getOriginalFilename() ==> "
-					+ file.getOriginalFilename());
+
 			logger.debug("file.getContentType() ==> " + file.getContentType());
-			logger.debug("file.getName() ==> " + file.getName());
-			fileName = getWholeFileName(file.getOriginalFilename());
-			File outFile = new File(realDirPath + fileName);
-			logger.debug("file WholeName ==> " + realDirPath + fileName);
+			String fileName = getWholeFileName();
+			map.put(FILE_NAME, fileName);
+			logger.debug("fileName ==> " + fileName);
+			String fileExt = StringUtils.getFileExt(file.getOriginalFilename());
+			map.put(FILE_EXT, fileExt);
+			logger.debug("fileExt ==> " + fileExt);
+
+			String wholeFileName = realDirPath + fileName + fileExt;
+			logger.debug("file WholeName ==> " + wholeFileName);
+			File outFile = new File(wholeFileName);
+
 			if (!outFile.exists()) {
 				makeDir(outFile.getParentFile());
 				outFile.createNewFile();
@@ -83,9 +93,31 @@ public class UploadUtils {
 			outStream.write(data);
 			outStream.close();
 			input.close();
+
+			// Save 640X320 image
+			save640X320Image(realDirPath + fileName, fileExt);
+
+			// Save 80X80 image
+			save80X80Image(realDirPath + fileName, fileExt);
 		}
 
-		return fileName;
+		return map;
+	}
+
+	private static void save640X320Image(String realDirPath, String fileExt)
+			throws Exception {
+		String outFilePath = realDirPath + StringUtils.UNDERLINE
+				+ ImageUtils.EXT_MEDIUM_SIZE + fileExt;
+		ImageUtils.saveImageAsJpg(realDirPath + fileExt, outFilePath,
+				ImageUtils.MEDIUM_WIDTH, ImageUtils.MEDIUM_HEIGHT);
+	}
+
+	private static void save80X80Image(String realDirPath, String fileExt)
+			throws Exception {
+		String outFilePath = realDirPath + StringUtils.UNDERLINE
+				+ ImageUtils.EXT_SMALL_SIZE + fileExt;
+		ImageUtils.saveImageAsJpg(realDirPath + fileExt, outFilePath,
+				ImageUtils.SMALL_SIZE, ImageUtils.SMALL_SIZE);
 	}
 
 	/**
@@ -94,16 +126,10 @@ public class UploadUtils {
 	 * @param fileName
 	 * @return
 	 */
-	private static String getWholeFileName(String fileName) {
+	private static String getWholeFileName() {
 		StringBuffer sb = new StringBuffer(UPLOAD_PATH);
 		sb.append(DateUtils.todayToString()).append(File.separator)
 				.append(UUID.randomUUID());
-		String fileExt = StringUtils.getFileExt(fileName);
-		if (StringUtils.isNoEmpty(fileExt)) {
-			sb.append(fileExt);
-		} else {
-			sb.append(fileName);
-		}
 
 		return sb.toString();
 	}

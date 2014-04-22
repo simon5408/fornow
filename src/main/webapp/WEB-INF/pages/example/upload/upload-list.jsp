@@ -43,16 +43,18 @@
 							</tr>
 							<tr>
 								<th>No.</th>
-								<th>Pic</th>
-								<th>Addr</th>
+								<th>Origin Pic</th>
+								<th>Medium Pic</th>
+								<th>Samll Pic</th>
 								<th>Date</th>
 								<th></th>
 							</tr>
 							<c:forEach var="uploadFiles" items="${page.datas}">
 								<tr>
 									<td>${uploadFiles.uploadid}</td>
-									<td><img src="${pageContext.request.contextPath}/${uploadFiles.filepath}"/></td>
-									<td>${uploadFiles.filepath}</td>
+									<td><img src="${pageContext.request.contextPath}/${uploadFiles.filepath}${uploadFiles.fileExt}"/></td>
+									<td><img src="${pageContext.request.contextPath}/${uploadFiles.mediumpath}${uploadFiles.fileExt}"/></td>
+									<td><img src="${pageContext.request.contextPath}/${uploadFiles.smallpath}${uploadFiles.fileExt}"/></td>
 									<td>
 										<u:dateFormat value="${uploadFiles.createDateTime}"/>
 									</td>
