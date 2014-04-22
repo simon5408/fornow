@@ -91,6 +91,12 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Initializer</servlet-name>
+		<servlet-class>com.fn.fornow.common.init.Initializer</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
 
 	<jsp-config>
 		<taglib>
