@@ -20,7 +20,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<http pattern="/login" security="none" />
 
 	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
-		<!-- if no limit, go to 403 page -->
+		<!-- if security limit, go to 403 page -->
 		<access-denied-handler error-page="/403" />
 		<!-- Logout -->
 		<logout invalidate-session="true" logout-url="/logout"

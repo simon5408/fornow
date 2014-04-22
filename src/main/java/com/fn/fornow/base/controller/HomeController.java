@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -69,10 +68,13 @@ public class HomeController extends CommonController {
 	}
 
 	@RequestMapping("/hi")
-	public String sayHi(ModelMap map) {
+	public String sayHi(HttpServletRequest request) {
 		System.out.println("say hi ……");
-		map.put("name", "jojo");
-		return "/hi.ftl";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", "Simon");
+		String targetPath = "hi.html";
+		FreemarkerUtils.crateHTML(request.getSession().getServletContext(), map, "/hi.ftl", targetPath);
+		return redirect("/html/"+targetPath);
 	}
 
 	/*
