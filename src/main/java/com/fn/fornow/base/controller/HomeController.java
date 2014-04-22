@@ -63,8 +63,9 @@ public class HomeController extends CommonController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", " World!");
 		String targetPath = "hello.html";
-		FreemarkerUtils.crateHTML(request.getSession().getServletContext(), map, "/hello.ftl", targetPath);
-		return redirect("/html/"+targetPath);
+		FreemarkerUtils.crateHTML(request.getSession().getServletContext(),
+				map, "/hello.ftl", targetPath);
+		return redirect(FreemarkerUtils.STATIC_FTL_PATH + targetPath);
 	}
 
 	@RequestMapping("/hi")
@@ -73,8 +74,9 @@ public class HomeController extends CommonController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "Simon");
 		String targetPath = "hi.html";
-		FreemarkerUtils.crateHTML(request.getSession().getServletContext(), map, "/hi.ftl", targetPath);
-		return redirect("/html/"+targetPath);
+		FreemarkerUtils.crateHTML(request.getSession().getServletContext(),
+				map, "/hi.ftl", targetPath);
+		return redirect(FreemarkerUtils.STATIC_FTL_PATH + targetPath);
 	}
 
 	/*

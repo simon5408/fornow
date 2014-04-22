@@ -32,6 +32,9 @@ import freemarker.template.Template;
  * 
  */
 public class FreemarkerUtils {
+	public static final String ORIGIN_FTL_PATH = "/WEB-INF/ftl";
+	public static final String STATIC_FTL_PATH = "/html/";
+
 	/**
 	 * 生成静态页面主方法
 	 * 
@@ -48,7 +51,8 @@ public class FreemarkerUtils {
 			Map<String, Object> data, String templatePath, String targetHtmlPath) {
 		Configuration freemarkerCfg = new Configuration();
 		// 加载模版
-		freemarkerCfg.setServletContextForTemplateLoading(context, "/WEB-INF/ftl");
+		freemarkerCfg.setServletContextForTemplateLoading(context,
+				ORIGIN_FTL_PATH);
 		freemarkerCfg.setEncoding(Locale.getDefault(), "UTF-8");
 		try {
 			// 指定模版路径
@@ -56,15 +60,15 @@ public class FreemarkerUtils {
 					.getTemplate(templatePath, "UTF-8");
 			template.setEncoding("UTF-8");
 			// 静态页面路径
-			String htmlPath = context.getRealPath("/html") + "/"
-					+ targetHtmlPath;
+			String htmlPath = context.getRealPath(STATIC_FTL_PATH)
+					+ File.separator + targetHtmlPath;
 			File htmlFile = new File(htmlPath);
-			
+
 			if (!htmlFile.exists()) {
 				UploadUtils.makeDir(htmlFile.getParentFile());
 				htmlFile.createNewFile();
 			}
-			
+
 			Writer out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(htmlFile), "UTF-8"));
 			// 处理模版
