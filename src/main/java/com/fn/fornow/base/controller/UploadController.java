@@ -30,10 +30,10 @@ import com.fn.fornow.common.bean.Page;
 import com.fn.fornow.common.controller.CommonController;
 import com.fn.fornow.common.controller.Module;
 import com.fn.fornow.common.controller.path.ResultPath;
+import com.fn.fornow.common.helper.UploadHelper;
 import com.fn.fornow.common.orm.PropertyFilter;
 import com.fn.fornow.common.util.ImageUtils;
 import com.fn.fornow.common.util.StringUtils;
-import com.fn.fornow.common.util.UploadUtils;
 
 /**
  * @author Jiafa Lv
@@ -86,9 +86,9 @@ public class UploadController extends CommonController {
 					+ uploadFiles.getFileExt();
 			String smallPath = wholePath + uploadFiles.getSmallpath()
 					+ uploadFiles.getFileExt();
-			if (UploadUtils.isSucc4DelFile(originPath)
-					&& UploadUtils.isSucc4DelFile(mediumPath)
-					&& UploadUtils.isSucc4DelFile(smallPath)) {
+			if (UploadHelper.isSucc4DelFile(originPath)
+					&& UploadHelper.isSucc4DelFile(mediumPath)
+					&& UploadHelper.isSucc4DelFile(smallPath)) {
 				logger.debug("Try to delete column by: id[{}]", id);
 				uploadFilesService.delete(id);
 			}
@@ -101,9 +101,9 @@ public class UploadController extends CommonController {
 	public String getUploadFile(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			Map<String, String> fileMap = UploadUtils.getFileNameByUpload(
+			Map<String, String> fileMap = UploadHelper.getFileNameByUpload(
 					request, "uploadFile");
-			String fileName = fileMap.get(UploadUtils.FILE_NAME);
+			String fileName = fileMap.get(UploadHelper.FILE_NAME);
 
 			UploadFiles uploadFiles = new UploadFiles();
 			uploadFiles.setFilepath(fileName);
@@ -111,7 +111,7 @@ public class UploadController extends CommonController {
 					+ ImageUtils.EXT_MEDIUM_SIZE);
 			uploadFiles.setSmallpath(fileName + StringUtils.UNDERLINE
 					+ ImageUtils.EXT_SMALL_SIZE);
-			uploadFiles.setFileExt(fileMap.get(UploadUtils.FILE_EXT));
+			uploadFiles.setFileExt(fileMap.get(UploadHelper.FILE_EXT));
 			uploadFilesService.save(uploadFiles);
 
 		} catch (Exception e) {

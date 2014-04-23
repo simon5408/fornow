@@ -10,7 +10,7 @@
  *            Copyright (c) 2014 by ForNow.  All rights reserved.
  *
  *****************************************************************************/
-package com.fn.fornow.common.util;
+package com.fn.fornow.common.helper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,6 +28,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fn.fornow.common.util.DateUtils;
+import com.fn.fornow.common.util.ImageUtils;
+import com.fn.fornow.common.util.StringUtils;
+
 /**
  * @author Jiafa Lv
  * @date Apr 21, 2014 2:11:40 PM
@@ -35,12 +39,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
  * 
  */
 @Component
-public class UploadUtils {
+public class UploadHelper {
 	public static final String UPLOAD_PATH = "upload/";
 	public static final String FILE_NAME = "fileName";
 	public static final String FILE_EXT = "fileExt";
 
-	private static Logger logger = LoggerFactory.getLogger(UploadUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(UploadHelper.class);
 
 	/**
 	 * 
@@ -104,6 +108,13 @@ public class UploadUtils {
 		return map;
 	}
 
+	/**
+	 * Save image as 640X320 size
+	 * 
+	 * @param realDirPath
+	 * @param fileExt
+	 * @throws Exception
+	 */
 	private static void save640X320Image(String realDirPath, String fileExt)
 			throws Exception {
 		String outFilePath = realDirPath + StringUtils.UNDERLINE
@@ -112,6 +123,13 @@ public class UploadUtils {
 				ImageUtils.MEDIUM_WIDTH, ImageUtils.MEDIUM_HEIGHT);
 	}
 
+	/**
+	 * Save image as 80X80 size
+	 * 
+	 * @param realDirPath
+	 * @param fileExt
+	 * @throws Exception
+	 */
 	private static void save80X80Image(String realDirPath, String fileExt)
 			throws Exception {
 		String outFilePath = realDirPath + StringUtils.UNDERLINE

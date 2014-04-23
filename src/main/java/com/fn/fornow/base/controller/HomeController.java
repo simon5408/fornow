@@ -10,16 +10,24 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fn.fornow.base.entity.EmailInfo;
 import com.fn.fornow.common.controller.CommonController;
 import com.fn.fornow.common.controller.Module;
 import com.fn.fornow.common.controller.path.ResultPath;
-import com.fn.fornow.common.util.FreemarkerUtils;
+import com.fn.fornow.common.helper.FreemarkerHelper;
+import com.fn.fornow.common.helper.JSONHelper;
+import com.fn.fornow.common.helper.MailSendHelper;
+import com.fn.fornow.common.util.HttpUtils;
+import com.fn.fornow.demo.entity.ReturnJsonBean;
+import com.fn.fornow.enums.ReturnModule;
 
 /**
  * @author Simon Lv
@@ -28,6 +36,8 @@ import com.fn.fornow.common.util.FreemarkerUtils;
 @Controller
 @RequestMapping()
 public class HomeController extends CommonController {
+	@Autowired
+	private MailSendHelper sendMaileUtil;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -63,9 +73,9 @@ public class HomeController extends CommonController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", " World!");
 		String targetPath = "hello.html";
-		FreemarkerUtils.crateHTML(request.getSession().getServletContext(),
+		FreemarkerHelper.crateHTML(request.getSession().getServletContext(),
 				map, "/hello.ftl", targetPath);
-		return redirect(FreemarkerUtils.STATIC_FTL_PATH + targetPath);
+		return redirect(FreemarkerHelper.STATIC_FTL_PATH + targetPath);
 	}
 
 	@RequestMapping("/hi")
@@ -74,9 +84,31 @@ public class HomeController extends CommonController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "Simon");
 		String targetPath = "hi.html";
-		FreemarkerUtils.crateHTML(request.getSession().getServletContext(),
+		FreemarkerHelper.crateHTML(request.getSession().getServletContext(),
 				map, "/hi.ftl", targetPath);
-		return redirect(FreemarkerUtils.STATIC_FTL_PATH + targetPath);
+		return redirect(FreemarkerHelper.STATIC_FTL_PATH + targetPath);
+	}
+
+	@RequestMapping(value = "/mail")
+	public String gotoMail(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.debug(" Go to Mail page ==> ");
+		return ResultPath.mail;
+	}
+
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+	public void saveJsonInfo(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.debug(" Send Email ==> ");
+
+		EmailInfo emailInfo = JSONHelper.fromJson(HttpUtils.getReqJson(request),
+				EmailInfo.class);
+
+		sendMaileUtil.sendTextMail(emailInfo.getMailTo(),
+				emailInfo.getMailSubject(), emailInfo.getMailContent());
+
+		HttpUtils.respWrite(response,
+				new ReturnJsonBean(ReturnModule.success.getStatus()).toJson());
 	}
 
 	/*

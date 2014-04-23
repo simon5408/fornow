@@ -19,6 +19,7 @@ import com.fn.fornow.common.bean.Page;
 import com.fn.fornow.common.controller.CommonController;
 import com.fn.fornow.common.controller.Module;
 import com.fn.fornow.common.controller.path.ResultPath;
+import com.fn.fornow.common.helper.JSONHelper;
 import com.fn.fornow.common.orm.PropertyFilter;
 import com.fn.fornow.common.util.HttpUtils;
 import com.fn.fornow.demo.entity.Demo;
@@ -96,7 +97,7 @@ public class DemoController extends CommonController {
 			HttpServletResponse response, Model model) throws Exception {
 		logger.debug("[DemoController] getExpInfo ==> ");
 
-		String retStr = new Gson().toJson(this.getJsonBean());
+		String retStr = JSONHelper.toJson(this.getJsonBean());
 		logger.debug("[getJsonInfo] retStr ==> " + retStr);
 		HttpUtils.respWrite(response, retStr);
 	}
@@ -123,7 +124,7 @@ public class DemoController extends CommonController {
 
 	private void str2bean(String jsonStr) {
 		logger.debug("[str2bean] jsonStr ==> " + jsonStr);
-		JsonBean jsonBean = new Gson().fromJson(jsonStr, JsonBean.class);
+		JsonBean jsonBean = JSONHelper.fromJson(jsonStr, JsonBean.class);
 		logger.debug("[str2bean] name ==> " + jsonBean.getName());
 		logger.debug("[str2bean] friends name ==> "
 				+ jsonBean.getFrines().get(0).getName());
@@ -132,7 +133,7 @@ public class DemoController extends CommonController {
 	@RequestMapping(value = "/saveDemoInfo", method = RequestMethod.POST)
 	public void saveDemoInfo(HttpServletRequest request,
 			HttpServletResponse response, Model model) throws Exception {
-		Demo demo = new Gson().fromJson(HttpUtils.getReqJson(request),
+		Demo demo = JSONHelper.fromJson(HttpUtils.getReqJson(request),
 				Demo.class);
 		demoService.save(demo);
 

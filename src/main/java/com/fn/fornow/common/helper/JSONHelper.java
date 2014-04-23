@@ -10,7 +10,7 @@
  *            Copyright (c) 2014 by ForNow.  All rights reserved.
  *
  *****************************************************************************/
-package com.fn.fornow.common.util;
+package com.fn.fornow.common.helper;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,7 +21,7 @@ import com.google.gson.reflect.TypeToken;
  * @email simon-jiafa@126.com
  * 
  */
-public class JSONUtils {
+public class JSONHelper {
 	
 	/**
 	 * 将JSON字符串转化成实体Bean对象

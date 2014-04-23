@@ -7,6 +7,7 @@
 </script>
 
 <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/ieCommon.js'/>"></script>
 
 <script type="text/javascript" src="<c:url value='/js/twitter/bootstrap.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/twitter/bootstrap-modal.js'/>"></script>

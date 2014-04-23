@@ -10,7 +10,7 @@
  *            Copyright (c) 2014 by ForNow.  All rights reserved.
  *
  *****************************************************************************/
-package com.fn.fornow.common.util;
+package com.fn.fornow.common.helper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,6 +22,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -31,7 +32,7 @@ import freemarker.template.Template;
  * @email simon-jiafa@126.com
  * 
  */
-public class FreemarkerUtils {
+public class FreemarkerHelper {
 	public static final String ORIGIN_FTL_PATH = "/WEB-INF/ftl";
 	public static final String STATIC_FTL_PATH = "/html/";
 
@@ -65,7 +66,7 @@ public class FreemarkerUtils {
 			File htmlFile = new File(htmlPath);
 
 			if (!htmlFile.exists()) {
-				UploadUtils.makeDir(htmlFile.getParentFile());
+				UploadHelper.makeDir(htmlFile.getParentFile());
 				htmlFile.createNewFile();
 			}
 

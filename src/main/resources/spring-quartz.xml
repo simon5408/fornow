@@ -10,7 +10,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<bean id="springQtzJob" class="com.fn.fornow.quartz.SpringQtz" />
 
 	<!-- 定义目标bean和bean中的方法 -->
-	<bean id="simonQtzJobMethod"
+	<bean id="fornowQtzJobMethod"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="springQtzJob" />
 		<!-- 要执行的方法名称 -->
@@ -19,9 +19,9 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	</bean>
 
 	<!-- ======================== 调度触发器 ======================== -->
-	<bean id="simonCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail" ref="simonQtzJobMethod"></property>
-		<property name="cronExpression" value="0/55 * * * * ?"></property>
+	<bean id="fornowCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="fornowQtzJobMethod"></property>
+		<property name="cronExpression" value="5 * * * * ?"></property>
 		<property name="startDelay" value="5000"></property>
 	</bean>
 
@@ -30,7 +30,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="simonCronTriggerBean" />
+				<ref bean="fornowCronTriggerBean" />
 			</list>
 		</property>
 	</bean>
