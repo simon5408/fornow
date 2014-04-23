@@ -1,6 +1,5 @@
 package com.fn.fornow.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.google.gson.Gson;
 import com.fn.fornow.common.ViewName;
 import com.fn.fornow.common.bean.Page;
 import com.fn.fornow.common.controller.CommonController;
@@ -27,6 +25,8 @@ import com.fn.fornow.demo.entity.FriendsBean;
 import com.fn.fornow.demo.entity.JsonBean;
 import com.fn.fornow.demo.entity.ReturnJsonBean;
 import com.fn.fornow.enums.ReturnModule;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 
 /**
  * @author Simon Lv
@@ -103,10 +103,9 @@ public class DemoController extends CommonController {
 	}
 
 	private JsonBean getJsonBean() {
-		List<FriendsBean> friends = new ArrayList<FriendsBean>();
-		friends.add(new FriendsBean("Goorge", 1, 32));
-		friends.add(new FriendsBean("Enjoy", 1, 23));
-		friends.add(new FriendsBean("Tomy", 1, 26));
+		List<FriendsBean> friends = Lists.newArrayList(new FriendsBean(
+				"Goorge", 1, 32), new FriendsBean("Enjoy", 1, 23),
+				new FriendsBean("Tomy", 1, 26));
 
 		return new JsonBean("Simon", 33, friends);
 	}

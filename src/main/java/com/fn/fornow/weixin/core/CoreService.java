@@ -10,7 +10,7 @@
  *            Copyright (c) 2014 by ForNow.  All rights reserved.
  *
  *****************************************************************************/
-package com.fn.fornow.weixin.service;
+package com.fn.fornow.weixin.core;
 
 import java.util.ArrayList;
 import java.util.Date;

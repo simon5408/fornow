@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fn.fornow.common.controller.CommonController;
 import com.fn.fornow.common.controller.Module;
-import com.fn.fornow.weixin.service.CoreService;
+import com.fn.fornow.weixin.core.CoreService;
 
 /**
  * @author Jiafa Lv
