@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.fn.fornow.base.entity.Users;
 import com.fn.fornow.base.service.UserService;
 import com.fn.fornow.common.orm.dao.HibernateDaoSupport;
-import com.fn.fornow.common.util.CipherUtil;
 
 /**
  * @author Simon Lv
@@ -24,16 +23,16 @@ public class UserServiceImpl extends HibernateDaoSupport<Users> implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.fn.fornow.base.service.UserService#isExistUser(com.fn.fornow.base.entity
-	 * .User)
+	 * com.fn.fornow.base.service.UserService#isExistUser(com.fn.fornow.base
+	 * .entity .User)
 	 */
 	@Override
 	public boolean isExistUser(Users loginUser) {
 		if (loginUser != null) {
 			Users user = getUserByName(loginUser.getUsername());
 			if (user != null) {
-				if (CipherUtil.validatePassword(user.getPassword(),
-						loginUser.getPassword())) {
+				if (user.getPassword()
+						.equalsIgnoreCase(loginUser.getPassword())) {
 					return true;
 				}
 			}
@@ -45,7 +44,8 @@ public class UserServiceImpl extends HibernateDaoSupport<Users> implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.fn.fornow.base.service.UserService#getUserByName(java.lang.String)
+	 * @see
+	 * com.fn.fornow.base.service.UserService#getUserByName(java.lang.String)
 	 */
 	@Override
 	public Users getUserByName(String username) {

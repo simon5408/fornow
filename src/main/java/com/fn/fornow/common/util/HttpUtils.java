@@ -41,6 +41,7 @@ public class HttpUtils {
 			throws Exception {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter writer = response.getWriter();
+		log.debug("Response Json Data: "+jsonStr);
 		writer.write(jsonStr);
 		writer.flush();
 		writer.close();

@@ -18,7 +18,11 @@ import com.fn.fornow.common.bean.Page;
 import com.fn.fornow.common.controller.CommonController;
 import com.fn.fornow.common.controller.Module;
 import com.fn.fornow.common.controller.path.ResultPath;
+import com.fn.fornow.common.helper.JSONHelper;
 import com.fn.fornow.common.util.CipherUtil;
+import com.fn.fornow.common.util.HttpUtils;
+import com.fn.fornow.demo.entity.ReturnJsonBean;
+import com.fn.fornow.enums.ReturnModule;
 
 /**
  * @author Simon Lv
@@ -59,6 +63,7 @@ public class UsersController extends CommonController {
 		String password = user.getPassword();
 		logger.debug("login: username[{}]", username);
 		logger.debug("login: password[{}]", password);
+		user.setPassword(CipherUtil.generatePassword(password));
 
 		if (!userService.isExistUser(user)) {
 			model.addAttribute("errorMessages", "填写有错");
@@ -66,6 +71,22 @@ public class UsersController extends CommonController {
 		}
 
 		return redirect(ResultPath.user);
+	}
+
+	@RequestMapping(value = "/app/login", method = RequestMethod.POST)
+	public void appLogin(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Users user = JSONHelper.fromJson(HttpUtils.getReqJson(request),
+				Users.class);
+
+		if (!userService.isExistUser(user)) {
+			HttpUtils.respWrite(response, new ReturnJsonBean(
+					ReturnModule.success.getStatus()).toJson());
+		} else {
+			HttpUtils.respWrite(response, JSONHelper.toJson(userService
+					.getUserByName(user.getUsername())));
+		}
+
 	}
 
 	@RequestMapping("/edit/{id}")
