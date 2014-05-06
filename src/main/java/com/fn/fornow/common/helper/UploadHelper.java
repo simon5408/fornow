@@ -25,12 +25,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fn.fornow.common.util.DateUtils;
 import com.fn.fornow.common.util.ImageUtils;
-import com.fn.fornow.common.util.StringUtils;
 
 /**
  * @author Jiafa Lv
@@ -43,6 +43,7 @@ public class UploadHelper {
 	public static final String UPLOAD_PATH = "upload/";
 	public static final String FILE_NAME = "fileName";
 	public static final String FILE_EXT = "fileExt";
+	public static final String UNDERLINE = "_";
 
 	private static Logger logger = LoggerFactory.getLogger(UploadHelper.class);
 
@@ -77,7 +78,7 @@ public class UploadHelper {
 			String fileName = getWholeFileName();
 			map.put(FILE_NAME, fileName);
 			logger.debug("fileName ==> " + fileName);
-			String fileExt = StringUtils.getFileExt(file.getOriginalFilename());
+			String fileExt = StringUtils.getFilenameExtension(file.getOriginalFilename());
 			map.put(FILE_EXT, fileExt);
 			logger.debug("fileExt ==> " + fileExt);
 
@@ -117,7 +118,7 @@ public class UploadHelper {
 	 */
 	private static void save640X320Image(String realDirPath, String fileExt)
 			throws Exception {
-		String outFilePath = realDirPath + StringUtils.UNDERLINE
+		String outFilePath = realDirPath + UNDERLINE
 				+ ImageUtils.EXT_MEDIUM_SIZE + fileExt;
 		ImageUtils.saveImageAsJpg(realDirPath + fileExt, outFilePath,
 				ImageUtils.MEDIUM_WIDTH, ImageUtils.MEDIUM_HEIGHT);
@@ -132,7 +133,7 @@ public class UploadHelper {
 	 */
 	private static void save80X80Image(String realDirPath, String fileExt)
 			throws Exception {
-		String outFilePath = realDirPath + StringUtils.UNDERLINE
+		String outFilePath = realDirPath + UNDERLINE
 				+ ImageUtils.EXT_SMALL_SIZE + fileExt;
 		ImageUtils.saveImageAsJpg(realDirPath + fileExt, outFilePath,
 				ImageUtils.SMALL_SIZE, ImageUtils.SMALL_SIZE);

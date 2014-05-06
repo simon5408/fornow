@@ -117,7 +117,7 @@ public class StringUtils {
 		return false;
 	}
 
-	public static String getFileExt(String fileName) {
+	/*public static String getFileExt(String fileName) {
 		if (isNoEmpty(fileName)) {
 			List<String> array = getListWithSpecial(fileName, POINT);
 			if (array.size() > 0) {
@@ -125,5 +125,5 @@ public class StringUtils {
 			}
 		}
 		return null;
-	}
+	}*/
 }
